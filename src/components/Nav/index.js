@@ -1,25 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { capitalizeFirstLetter } from "../../utils/helpers";
 
-function Nav() {
-  const categories = [
-    {
-      name: "Commercial",
-      description:
-        "Photos of grocery stores, food trucks, and other commercial projects",
-    },
-    { name: "Portraits", description: "Portraits of people in my life" },
-    { name: "Food", description: "Delicious delicacies" },
-    {
-      name: "Landscape",
-      description: "Fields, farmhouses, waterfalls, and the beauty of nature",
-    },
-  ];
-
-  function categorySelected(name) {
-    console.log(`${name} clicked`);
-  }
+function Nav(props) {
+  const { categories = [], setCurrentCategory, currentCategory } = props;
+  useEffect(() => {
+    document.title = capitalizeFirstLetter(currentCategory.name);
+  }, [currentCategory]);
   return (
-    <header>
+    <header className="flex-rox px-1">
       <h2>
         <a data-testid="link" href="/">
           <span role="img" aria-label="camera">
@@ -40,10 +28,17 @@ function Nav() {
           </li>
           {/* NOT ENTIRELY SURE WHAT THIS MEANS - CAN IT BE EXPLAINED? */}
           {categories.map((category) => (
-            <li className="mx-1" key={category.name}>
+            // Short-cut expression: currentCategory.name === category name will be evaluated as long as it is true.
+            // navActive makes the navigation link colour change depending on which category selected.
+            <li
+              className={`mx-1 ${
+                currentCategory.name === category.name && "navActive"
+              }`}
+              key={category.name}
+            >
               {/* Event listener for whenever category is clicked. */}
-              <span onClick={() => categorySelected(category.name)}>
-                {category.name}
+              <span onClick={() => setCurrentCategory(category.name)}>
+                {capitalizeFirstLetter(category.name)}
               </span>
             </li>
           ))}
