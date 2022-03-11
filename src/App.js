@@ -1,22 +1,19 @@
 import React, { useState } from "react";
-import "./App.css";
-import About from "./components/About";
 import Nav from "./components/Nav";
+import About from "./components/About";
 import Gallery from "./components/Gallery";
 
 function App() {
-  // Initialize category state as an array of a few objects.
-  // Option to change cateogries in the future with the useState hook.
   const [categories] = useState([
     {
-      name: "Commercial",
+      name: "commercial",
       description:
         "Photos of grocery stores, food trucks, and other commercial projects",
     },
-    { name: "Portraits", description: "Portraits of people in my life" },
-    { name: "Food", description: "Delicious delicacies" },
+    { name: "portraits", description: "Portraits of people in my life" },
+    { name: "food", description: "Delicious delicacies" },
     {
-      name: "Landscape",
+      name: "landscape",
       description: "Fields, farmhouses, waterfalls, and the beauty of nature",
     },
   ]);
@@ -31,7 +28,7 @@ function App() {
         currentCategory={currentCategory}
       ></Nav>
       <main>
-        <Gallery></Gallery>
+        <Gallery currentCategory={currentCategory}></Gallery>
         <About></About>
       </main>
     </div>
