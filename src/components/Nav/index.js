@@ -1,29 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { capitalizeFirstLetter } from "../../utils/helpers";
 
-function Nav() {
-  const categories = [
-    {
-      name: "Commercial",
-      description:
-        "Photos of grocery stores, food trucks, and other commercial projects",
-    },
-    { name: "Portraits", description: "Portraits of people in my life" },
-    { name: "Food", description: "Delicious delicacies" },
-    {
-      name: "Landscape",
-      description: "Fields, farmhouses, waterfalls, and the beauty of nature",
-    },
-  ];
+function Nav(props) {
+  const {
+    categories = [],
+    setCurrentCategory,
+    currentCategory,
+    contactSelected,
+    setContactSelected,
+  } = props;
 
-  function categorySelected(name) {
-    console.log(`${name} clicked`);
-  }
+  const handleClick = (item) => {
+    console.log(item);
+    return item;
+  };
+
   return (
-    <header>
+    <header className="flex-row px-1">
       <h2>
-        <a href="/">
+        {/* When about is sleected, contactSelected is set to false and the About component is rendered. */}
+        <a
+          data-testid="about"
+          href="#about"
+          onClick={() => setContactSelected(false)}
+        >
           <span role="img" aria-label="camera">
-            📷
+            {" "}
+            📸
           </span>{" "}
           Oh Snap!
         </a>
@@ -31,17 +34,34 @@ function Nav() {
       <nav>
         <ul className="flex-row">
           <li className="mx-2">
-            <a href="#about">About Me</a>
+            <a data-testid="about" href="#about">
+              About me
+            </a>
           </li>
-          <li>
-            <span>Contact</span>
+          <li className={`mx-2 ${contactSelected && "navActive"}`}>
+            <span onClick={() => setContactSelected(true)}>Contact</span>
           </li>
           {/* NOT ENTIRELY SURE WHAT THIS MEANS - CAN IT BE EXPLAINED? */}
           {categories.map((category) => (
-            <li className="mx-1" key={category.name}>
+            // Short-cut expression: currentCategory.name === category name will be evaluated as long as it is true.
+            // navActive makes the navigation link colour change depending on which category selected.
+            // navActive assigned only if Contact hasn't been selected and the current category HAS been selected.
+            <li
+              className={`mx-1 ${
+                currentCategory.name === category.name &&
+                !contactSelected &&
+                `navActive`
+              }`}
+              key={category.name}
+            >
               {/* Event listener for whenever category is clicked. */}
-              <span onClick={() => categorySelected(category.name)}>
-                {category.name}
+              <span
+                onClick={() => {
+                  setCurrentCategory(category);
+                  setContactSelected(false);
+                }}
+              >
+                {capitalizeFirstLetter(category.name)}
               </span>
             </li>
           ))}
