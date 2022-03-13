@@ -127,7 +127,7 @@ const PhotoList = ({ category }) => {
   // Open the modal when user has clicked on image - modify the click handler so that it updates the isModalOpen value to true. Evaluates the short circuit in the preceding code statement to render the modal.
   const toggleModal = (image, i) => {
     setCurrentPhoto({ ...image, index: i });
-    setIsModalOpen(true);
+    setIsModalOpen(!isModalOpen);
   };
 
   return (

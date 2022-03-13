@@ -1,7 +1,8 @@
 import React from "react";
 
-function Modal({ currentPhoto }) {
+const Modal = ({ onClose, currentPhoto }) => {
   const { name, category, description, index } = currentPhoto;
+
   return (
     // Basic modal with backdrop and container. Title, description, selected image, and button to close modal.
     //   Need to contain the property values of the photo selected.
@@ -13,10 +14,12 @@ function Modal({ currentPhoto }) {
           alt="current category"
         />
         <p>{description}</p>
-        <button type="button">Close this modal</button>
+        <button onClick={onClose} type="button">
+          Close this modal
+        </button>
       </div>
     </div>
   );
-}
+};
 
 export default Modal;
